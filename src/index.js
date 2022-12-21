@@ -16,6 +16,7 @@ const loadMoreBtn = new LoadMoreBtn({
 
 let searchQuery = '';
 let currentPage = 1;
+let currentHits = 0;
 
 form.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
