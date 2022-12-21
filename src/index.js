@@ -25,14 +25,16 @@ async function onSearch(e) {
     currentPage = 1;
 
     if (searchQuery === '') {
-        galleryItem.innerHTML = '';
+        clearGalleryMarkup();
         loadMoreBtn.hide();
         return Notiflix.Notify.warning('Please paste some info to find')
     }
 
     const response = await fetchArticles(searchQuery, currentPage);
     currentHits = response.hits.length;
-    console.log(response.totalHits)
+    console.log(currentHits);
+    currentPage = 1;
+    const totalPages = Math.ceil(response.totalHits/40);
 
     if (response.totalHits > 40) {
         loadMoreBtn.show();
@@ -43,14 +45,17 @@ async function onSearch(e) {
     try {
         if (response.totalHits > 0){
             Notiflix.Notify.success(`Hooray! We found ${response.totalHits} images.`);
-            galleryItem.innerHTML = '';
+            clearGalleryMarkup();
             appendHitsMarkup(response.hits);
             createGallerySimpleLightbox();
         }
         if (response.totalHits === 0) {
-            galleryItem.innerHTML = '';
+            clearGalleryMarkup()
             Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
             loadMoreBtn.hide();
+        }
+        if (response.totalHits !== 0 && currentPage>totalPages) {
+            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
         }
     }
     catch (error) {console.log(error);}
@@ -70,6 +75,7 @@ async function onLoadMore() {
 
     if (currentHits === response.totalHits) {
         loadMoreBtn.disable();
+        loadMoreBtn.hide();
     }
 }
 
@@ -82,4 +88,8 @@ function smoothScroll() {
         top: cardHeight * 2,
         behavior: "smooth",
     });
+}
+
+function clearGalleryMarkup() {
+    galleryItem.innerHTML = '';
 }
