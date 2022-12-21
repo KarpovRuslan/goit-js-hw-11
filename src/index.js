@@ -34,7 +34,7 @@ async function onSearch(e) {
     const response = await fetchArticles(searchQuery, currentPage);
     currentHits = response.hits.length;
     console.log(currentHits);
-    currentPage = 2;
+    currentPage = 1;
     const totalPages = Math.ceil(response.totalHits/40);
 
     if (response.totalHits > 40) {
@@ -75,7 +75,7 @@ async function onLoadMore() {
     currentHits += response.hits.length;
 
     if (currentHits === response.totalHits) {
-        loadMoreBtn.disable();
+        //loadMoreBtn.disable();
         loadMoreBtn.hide();
     }
 }
