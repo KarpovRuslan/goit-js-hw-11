@@ -15,6 +15,7 @@ const loadMoreBtn = new LoadMoreBtn({
 });
 
 let searchQuery = '';
+let currentPage = 1;
 
 form.addEventListener('submit', onSearch);
 loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
@@ -22,7 +23,6 @@ loadMoreBtn.refs.button.addEventListener('click', onLoadMore);
 async function onSearch(e) {
     e.preventDefault();
     searchQuery = e.currentTarget.elements.searchQuery.value;
-    currentPage = 1;
 
     if (searchQuery === '') {
         clearGalleryMarkup();
@@ -33,7 +33,7 @@ async function onSearch(e) {
     const response = await fetchArticles(searchQuery, currentPage);
     currentHits = response.hits.length;
     console.log(currentHits);
-    currentPage = 1;
+    currentPage = 2;
     const totalPages = Math.ceil(response.totalHits/40);
 
     if (response.totalHits > 40) {
