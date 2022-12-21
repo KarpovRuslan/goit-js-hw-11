@@ -1,4 +1,4 @@
-export default function renderSearch(hits){
+export default function renderSearch(hits) {
     const markup = hits
         
         .map(({ tags, webformatURL, likes, views, comments, downloads, largeImageURL }) => {
@@ -26,3 +26,4 @@ export default function renderSearch(hits){
         }).join('');
     return markup;
 };
+
